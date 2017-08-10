@@ -9,6 +9,7 @@ using namespace std;
 class Folder;
 class Message{
 	friend class Folder;
+	friend void swap(Message&, Message&);
 public:
 	//构造函数 
 	explicit Message(const string &str = ""):contents(str){}
@@ -26,8 +27,15 @@ public:
 	//析构函数 
 	~Message();
 	
+	void print_debug(){
+		cout << contents<<endl;
+	}
+	
 	void save(Folder &f);
 	void remove(Folder &f);
+	
+	void addFldr(Folder*);
+	void remFldr(Folder*);
 private:
 	//信息的内容
 	string contents;
@@ -40,10 +48,21 @@ private:
 
 class Folder{
 public:
+	Folder()=default;
+	//拷贝控制函数
+	Folder(const Folder&);
+	Folder& operator=(const Folder &rhs);
+	~Folder(); 
+	
+	void print_debug(); 
+	
 	void addMsg(Message*);
 	void remMsg(Message*);
 private:
 	set<Message*> messages;
+	//把Message指向这个Folder 
+	void add_to_Message(const Folder &rhs);
+	void remove_from_Message();
 };
 
 #endif
