@@ -5,14 +5,20 @@ using namespace std;
 #include <sstream>
 
 int main(){
-	ifstream istrm("words.txt");
-	string line;
 	StrBlob sb;
+	string hello = "hello";
+	sb.push_back(hello);
 	
-	while (istrm >> line){
-		sb.push_back(line);
-	}
-		
+	
+	
+//	ifstream istrm("words.txt");
+//	string line;
+//	StrBlob sb;
+//	
+//	while (istrm >> line){
+//		sb.push_back(line);
+//	}
+//		
 	for (StrBlobPtr pbeg(sb.begin()), pend(sb.end()); pbeg!=pend; pbeg.incr()){
 		cout << pbeg.deref()<<endl;
 	}

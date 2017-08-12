@@ -6,7 +6,8 @@
 #include <initializer_list>
 #include <memory>
 #include <exception>//异常类 
-
+#include <iostream>
+using namespace std;
 using std::vector;
 using std::string;
 
@@ -29,7 +30,11 @@ public:
     size_type size() const { return data->size(); }
     bool empty() const { return data->empty(); }
 
-    void push_back(const string& t) { data->push_back(t); }
+    void push_back(const string& t) { data->push_back(t); cout <<"调用拷贝"<<endl;}
+    void push_back(string &&t){
+    	cout <<"调用移动"<<endl;
+    	data->push_back(move(t));//调用移动 
+	}
     void pop_back()
     {
         check(0, "pop_back on empty StrBlob");

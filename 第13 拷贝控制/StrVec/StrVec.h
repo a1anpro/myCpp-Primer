@@ -19,12 +19,14 @@ public:
 	//析构函数	
 	~StrVec(); 
 
-	//移动构造函数
+	//移动构造函数，当传入的是一个右值的时候使用 
 	StrVec(StrVec &&s) noexcept
 		:elements(s.elements),first_free(s.first_free),cap(s.cap){
 		s.elements = s.first_free = s.cap = nullptr;
 		//令s进入这样的状态---对其运行析构函数是安全的	
 	} 
+	//移动赋值运算符
+	StrVec& operator=(StrVec&&) noexcept;
 
 	//成员函数
 	void push_back(const string&);

@@ -38,6 +38,8 @@ void StrVec::reallocate(){
 	{
 		alloc.construct(dest, move(*elem++));//用move构造string，不用拷贝构造 
 	}
+	//可以用标准库的算法和移动迭代器来代替循环
+	//auto last = uninitialized_copy(make_move_iterator(begin()),make_move_iterator(end()),elem); 
 	free();//一旦我们移动完了元素，就释放旧的内存空间
 	elements = newData;
 	first_free = dest;//construct完后就在有效元素的下一位
@@ -70,6 +72,18 @@ StrVec& StrVec::operator=(const StrVec &rhs){
 StrVec::~StrVec(){
 	free();
 }
+
+//移动赋值运算符
+StrVec& StrVec::operator=(StrVec &&s) noexcept{
+	if (this != &s){
+		free();//先释放this原来的内存 
+		elements = s.elements;
+		first_free = s.first_free;
+		cap = s.cap;
+		s.elements = s.first_free = s.cap = nullptr;
+	}
+	return *this;
+} 
 
 //成员函数的实现
 
