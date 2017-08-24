@@ -1,6 +1,15 @@
 #include "TextQuery.h"
 
-TextQuery::TextQuery(ifstream &infile):text(new vector<string>)//构造的时候动态新建内存 
+
+// custom deleter may not use with std::make_shared, as it has an internal
+    // deleter which may not be replaced. As a result, keyword new is the only
+    // option to use with DebugDelete.
+    /*
+    sp_fileData(std::make_shared<std::vector<std::string>>() ),
+    sp_queryMap(std::make_shared<std::map<std::string, std::set<int>>>() )
+    */
+TextQuery::TextQuery(ifstream &infile):text(new vector<string>, DebugDelete())//构造的时候动态新建内存 ...shared_ptr默认使用第一个模板参数的析构函数，
+//现在传给它DebugDelete()来覆盖默认实参。 
 {
 	string line;
 	lineNo lineNum = 0;

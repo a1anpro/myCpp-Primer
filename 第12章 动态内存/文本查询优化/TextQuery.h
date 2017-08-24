@@ -10,6 +10,19 @@
 #include <sstream>
 using namespace std;
 
+class DebugDelete{
+public:
+	DebugDelete(ostream &s = cerr):os(s){}
+	
+	template<typename T>
+	void operator()(T *d){
+		os << "deleteing unique_ptr"<<endl;
+		delete d;//
+	}
+private:
+	ostream &os;
+};
+
 class QueryResult;
 class TextQuery{
 public:

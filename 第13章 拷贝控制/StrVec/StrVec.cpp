@@ -36,7 +36,8 @@ void StrVec::reallocate(){
 	auto elem = elements;
 	for (size_t i = 0; i != size(); ++i)
 	{
-		alloc.construct(dest, move(*elem++));//用move构造string，不用拷贝构造 
+		alloc.construct(dest++, move(*elem++));//用move构造string，不用拷贝构造 
+		//dest必须要增加，才能在连续的空间里面放值 
 	}
 	//可以用标准库的算法和移动迭代器来代替循环
 	//auto last = uninitialized_copy(make_move_iterator(begin()),make_move_iterator(end()),elem); 
@@ -56,7 +57,7 @@ StrVec::StrVec(initializer_list<string> il){
 //拷贝控制函数 
 StrVec::StrVec(const StrVec &rhs){
 	//把rhs的值拷贝到this，要把元素都拷贝过去。并且operator=也有这个操作。我们要做个内部工具函数
-	auto data = alloc_n_copy(elements, first_free);
+	auto data = alloc_n_copy(rhs.elements, rhs.first_free);
 	elements = data.first;
 	first_free = cap = data.second;
 }

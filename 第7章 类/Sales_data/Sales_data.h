@@ -41,4 +41,11 @@ inline double Sales_data::avg_price() const
     return units_sold ? revenue / units_sold : 0;
 }
 
+template<typename T>
+int compare(const T &lhs, const T &rhs){
+	if (less<T>()(lhs, rhs)) return 1;
+	else if (less<T>()(rhs, lhs)) return -1;
+	else return 0;
+}
+
 #endif
