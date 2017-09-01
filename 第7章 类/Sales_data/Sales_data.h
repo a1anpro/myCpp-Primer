@@ -7,11 +7,14 @@ using namespace std;
 
 // added overloaded input, output, addition, and compound-assignment operators
 class Sales_data {
+	friend struct hash<Sales_data>;
     friend  istream& operator>>( istream&, Sales_data&);       // input
     friend  ostream& operator<<( ostream&, const Sales_data&); // output
     friend Sales_data operator+(const Sales_data&,
                                 const Sales_data&); // addition
-
+	friend bool operator==(const Sales_data&,
+                                const Sales_data&);//equal
+    friend bool operator< (const Sales_data&, const Sales_data&);                    
 public:
     Sales_data(const  string& s, unsigned n, double p)
         : bookNo(s), units_sold(n), revenue(n * p)
@@ -22,7 +25,7 @@ public:
     Sales_data( istream& is);
 
     Sales_data& operator+=(const Sales_data&); // compound-assignment
-     string isbn() const { return bookNo; }
+    string isbn() const { return bookNo; }
 
 private:
     inline double avg_price() const;
@@ -35,6 +38,8 @@ private:
 istream& operator>>( istream&, Sales_data&);
 ostream& operator<<( ostream&, const Sales_data&);
 Sales_data operator+(const Sales_data&, const Sales_data&);
+bool operator==(const Sales_data&, const Sales_data&);
+bool operator<(const Sales_data&, const Sales_data&);
 
 inline double Sales_data::avg_price() const
 {

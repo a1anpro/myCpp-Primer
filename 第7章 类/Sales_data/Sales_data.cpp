@@ -11,6 +11,12 @@ Sales_data& Sales_data::operator+=(const Sales_data& rhs)
     revenue += rhs.revenue;
     return *this;
 }
+Sales_data operator+(const Sales_data& lhs, const Sales_data& rhs)
+{
+   Sales_data ret = lhs;
+   ret += rhs;
+   return ret;
+}
 
  istream& operator>>( istream& is, Sales_data& item)
 {
@@ -27,12 +33,19 @@ Sales_data& Sales_data::operator+=(const Sales_data& rhs)
 {
     os << item.isbn() << " " << item.units_sold << " " << item.revenue << " "
        << item.avg_price();
-    return os;
+    return os;//书的isbn、销量、销售收入、均值 
 }
 
-Sales_data operator+(const Sales_data& lhs, const Sales_data& rhs)
+bool operator==(const Sales_data &lhs, const Sales_data &rhs)
 {
-   Sales_data ret = lhs;
-   ret+=rhs;
-   return ret;
+	if (lhs.bookNo == rhs.bookNo){
+		return true;
+	}
+	return false;
 }
+bool operator<(const Sales_data &lhs, const Sales_data &rhs)
+{
+	return lhs.bookNo < rhs.bookNo;
+}
+
+
